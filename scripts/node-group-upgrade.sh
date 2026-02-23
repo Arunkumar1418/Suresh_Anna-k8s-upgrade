@@ -33,9 +33,9 @@ done
 
 # 1. Update Launch Template with new AMI
 NEW_AMI=$(aws ssm get-parameter \
-  --name /aws/service/eks/optimized-ami/1.33/amazon-linux-2/recommended/image_id \
+  --name /aws/service/eks/optimized-ami/1.34/amazon-linux-2/recommended/image_id \
   --query 'Parameter.Value' --output text)
-echo "New AMI for 1.33: ${NEW_AMI}"
+echo "New AMI for 1.34: ${NEW_AMI}"
 
 # 2. Update Launch Template version with new AMI
 # 3. Start instance refresh with healthy percentage

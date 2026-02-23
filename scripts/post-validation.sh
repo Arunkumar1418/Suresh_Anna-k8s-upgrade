@@ -2,7 +2,7 @@
 #!/bin/bash
 
 CLUSTER_NAME=$1
-EXPECTED_VERSION="v1.33"
+EXPECTED_VERSION="v1.34"
 ERRORS=0
 
 echo "═══════════════════════════════════════════════"
@@ -13,7 +13,7 @@ echo "════════════════════════�
 echo ""
 echo "1️⃣  Checking cluster version..."
 CLUSTER_VERSION=$(kubectl version --short 2>/dev/null | grep "Server Version" | awk '{print $3}')
-if [[ "${CLUSTER_VERSION}" == *"1.33"* ]]; then
+if [[ "${CLUSTER_VERSION}" == *"1.34"* ]]; then
   echo "   ✅ Cluster version: ${CLUSTER_VERSION}"
 else
   echo "   ❌ Unexpected cluster version: ${CLUSTER_VERSION}"
@@ -36,9 +36,9 @@ fi
 # 3. Check node versions match
 echo ""
 echo "3️⃣  Checking node kubelet versions..."
-OLD_NODES=$(kubectl get nodes -o jsonpath='{range .items[*]}{.status.nodeInfo.kubeletVersion}{"\n"}{end}' | grep -v "1.33" | wc -l)
+OLD_NODES=$(kubectl get nodes -o jsonpath='{range .items[*]}{.status.nodeInfo.kubeletVersion}{"\n"}{end}' | grep -v "1.34" | wc -l)
 if [ "${OLD_NODES}" -eq 0 ]; then
-  echo "   ✅ All nodes running kubelet 1.33"
+  echo "   ✅ All nodes running kubelet 1.34"
 else
   echo "   ❌ ${OLD_NODES} nodes still on old kubelet version"
   kubectl get nodes -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.status.nodeInfo.kubeletVersion}{"\n"}{end}'

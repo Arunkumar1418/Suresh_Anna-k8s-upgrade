@@ -1,5 +1,5 @@
 # ── GET LATEST COMPATIBLE ADDON VERSIONS ──────────────────────
-K8S_VERSION="1.33"
+K8S_VERSION="1.34"
 
 for ADDON in coredns kube-proxy vpc-cni aws-ebs-csi-driver; do
   LATEST=$(aws eks describe-addon-versions \
@@ -13,7 +13,7 @@ done
 # ── UPGRADE EACH ADDON ─────────────────────────────────────────
 # vpc-cni FIRST (networking dependency)
 VPC_CNI_VERSION=$(aws eks describe-addon-versions \
-  --kubernetes-version 1.33 \
+  --kubernetes-version 1.34 \
   --addon-name vpc-cni \
   --query 'addons[0].addonVersions[0].addonVersion' \
   --output text)
@@ -34,7 +34,7 @@ echo "✅ vpc-cni upgraded"
 
 # kube-proxy
 KUBE_PROXY_VERSION=$(aws eks describe-addon-versions \
-  --kubernetes-version 1.33 \
+  --kubernetes-version 1.34 \
   --addon-name kube-proxy \
   --query 'addons[0].addonVersions[0].addonVersion' \
   --output text)
@@ -54,7 +54,7 @@ echo "✅ kube-proxy upgraded"
 
 # CoreDNS
 COREDNS_VERSION=$(aws eks describe-addon-versions \
-  --kubernetes-version 1.33 \
+  --kubernetes-version 1.34 \
   --addon-name coredns \
   --query 'addons[0].addonVersions[0].addonVersion' \
   --output text)
@@ -74,7 +74,7 @@ echo "✅ CoreDNS upgraded"
 
 # EBS CSI Driver
 EBS_CSI_VERSION=$(aws eks describe-addon-versions \
-  --kubernetes-version 1.33 \
+  --kubernetes-version 1.34 \
   --addon-name aws-ebs-csi-driver \
   --query 'addons[0].addonVersions[0].addonVersion' \
   --output text)

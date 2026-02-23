@@ -3,8 +3,8 @@
 
 set -e
 
-CLUSTER_NAME="osp-mmb-nonprod-eks-cluster"
-REGION="eu-central-1"
+CLUSTER_NAME="eks-cluster-dev"
+REGION="us-west-2"
 
 echo "=========================================="
 echo "Node Group Rollback Script"

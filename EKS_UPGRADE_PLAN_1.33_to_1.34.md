@@ -1,5 +1,5 @@
 # EKS Cluster Upgrade Plan: 1.33 → 1.34
-## Cluster: osp-mmb-nonprod-eks-cluster (eu-central-1)
+## Cluster: eks-cluster-dev (us-west-2)
 
 ---
 
@@ -18,8 +18,8 @@
 ### 1.1 Gather Current Cluster State
 ```bash
 # Set region
-export AWS_REGION=eu-central-1
-export CLUSTER_NAME=osp-mmb-nonprod-eks-cluster
+export AWS_REGION=us-west-2
+export CLUSTER_NAME=eks-cluster-dev
 
 # Get cluster details
 aws eks describe-cluster --name $CLUSTER_NAME --region $AWS_REGION > cluster-info.json
@@ -129,9 +129,9 @@ helm install velero vmware-tanzu/velero \
   --create-namespace \
   --set configuration.provider=aws \
   --set configuration.backupStorageLocation.bucket=<your-s3-bucket> \
-  --set configuration.backupStorageLocation.config.region=eu-central-1 \
+  --set configuration.backupStorageLocation.config.region=us-west-2 \
   --set snapshotsEnabled=true \
-  --set configuration.volumeSnapshotLocation.config.region=eu-central-1
+  --set configuration.volumeSnapshotLocation.config.region=us-west-2
 
 # Create full cluster backup
 velero backup create pre-upgrade-backup-$(date +%Y%m%d-%H%M%S) \
@@ -165,7 +165,7 @@ aws ec2 create-snapshot \
   --volume-id <volume-id> \
   --description "Pre-upgrade backup $(date +%Y%m%d)" \
   --tag-specifications 'ResourceType=snapshot,Tags=[{Key=Purpose,Value=EKS-Upgrade-Backup}]' \
-  --region eu-central-1
+  --region us-west-2
 ```
 
 ### 2.3 Configuration Backup
@@ -494,7 +494,7 @@ kubectl scale statefulset <name> -n <namespace> --replicas=0
 aws ec2 create-volume \
   --snapshot-id <snapshot-id> \
   --availability-zone <az> \
-  --region eu-central-1
+  --region us-west-2
 
 # 3. Update PV to point to new volume
 kubectl edit pv <pv-name>
@@ -628,8 +628,8 @@ kubectl get pvc --all-namespaces
 
 set -e
 
-CLUSTER_NAME="osp-mmb-nonprod-eks-cluster"
-REGION="eu-central-1"
+CLUSTER_NAME="eks-cluster-dev"
+REGION="us-west-2"
 BACKUP_DIR="eks-upgrade-backup-$(date +%Y%m%d-%H%M%S)"
 
 echo "Creating backup directory: $BACKUP_DIR"
@@ -682,8 +682,8 @@ echo "Backup completed in: $BACKUP_DIR"
 
 set -e
 
-CLUSTER_NAME="osp-mmb-nonprod-eks-cluster"
-REGION="eu-central-1"
+CLUSTER_NAME="eks-cluster-dev"
+REGION="us-west-2"
 TARGET_VERSION="1.34"
 
 echo "Starting EKS cluster upgrade to $TARGET_VERSION"

@@ -8,12 +8,12 @@ velero install \
   --provider aws \
   --plugins velero/velero-plugin-for-aws:v1.9.0 \
   --bucket your-velero-backup-bucket \
-  --backup-location-config region=us-east-1 \
-  --snapshot-location-config region=us-east-1 \
+  --backup-location-config region=us-west-2 \
+  --snapshot-location-config region=us-west-2 \
   --secret-file ./credentials-velero
 
 # ── CREATE PRE-UPGRADE BACKUP ──────────────────────────────────
-CLUSTER_NAME="dev-cluster"
+CLUSTER_NAME="eks-cluster-dev"
 DATE=$(date +%Y%m%d-%H%M%S)
 
 velero backup create "pre-upgrade-${CLUSTER_NAME}-${DATE}" \

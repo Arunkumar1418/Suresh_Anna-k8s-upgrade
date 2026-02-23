@@ -1,7 +1,7 @@
 # ── SET VARIABLES ─────────────────────────────────────────────
-CLUSTER_NAME="dev-eks-cluster"    # Change per env
-REGION="us-east-1"
-NEW_VERSION="1.33"
+CLUSTER_NAME="eks-cluster-dev"    # Change per env
+REGION="us-west-2"
+NEW_VERSION="1.34"
 
 # ── PRE-FLIGHT: CHECK UPGRADE READINESS ──────────────────────
 aws eks describe-addon-versions --kubernetes-version ${NEW_VERSION} \
